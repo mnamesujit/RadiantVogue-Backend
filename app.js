@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const morgan = require('morgan')
+const Connection = require('./config/dbConnection');
 
 //  Middlewares
 app.use(morgan("dev"));
