@@ -2,7 +2,7 @@ require('dotenv').config()
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 const SECRET_KEY = process.env.JWT_TOKEN;
-const Connection = require('../config/dbConnection')
+const Connection = require('../../config/dbConnection')
 
 const register = async (req, res) => {
     try {
@@ -67,9 +67,8 @@ const login = async (req, res) => {
       if (!passwordMatch) {
         return res.status(401).json({ message: 'Authentication failed' });
       }
-
       // Generate a JWT upon successful login
-      const token = jwt.sign({ email }, SECRET_KEY, {
+      const token = jwt.sign({ user_id: user.user_id, email: email, user_type: user.user_type }, SECRET_KEY, {
         expiresIn: '1h',
       });
 

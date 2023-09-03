@@ -8,6 +8,7 @@ const Connection = require('./config/dbConnection');
 // Importing Routes
 const userRoutes = require("./routes/user")
 const productRoutes = require("./routes/product")
+const merchantRoutes = require("./routes/merchant")
 
 
 //  Middlewares
@@ -24,6 +25,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/user', userRoutes);
 app.use('/api/products', productRoutes)
+app.use('/api/merchant', merchantRoutes)
 
 
 module.exports = app

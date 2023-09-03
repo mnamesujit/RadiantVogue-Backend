@@ -1,5 +1,5 @@
 // controllers/productController.js
-const Connection = require("../config/dbConnection");
+const Connection = require("../../config/dbConnection");
 
 const getProducts = async (req, res) => {
   try {

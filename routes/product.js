@@ -1,7 +1,7 @@
-// routes/product.js
+
 const express = require('express');
 const router = express.Router();
-const {getProducts, getPendingProducts, getApprovedProducts, approveProduct} = require('../controllers/productController');
+const {getProducts, getPendingProducts, getApprovedProducts, approveProduct} = require('../controllers/products/productController');
 const checkAuthToken = require('../middlewares/auth');
 
 // routes for product-related operations
