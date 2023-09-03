@@ -40,10 +40,11 @@ const addProduct = async (req, res) => {
         discount,
         quantity_available,
       } = req.body;
+      const { user_id } = req.user;
 
       // Insert the new product into the database
       const [result] = await Connection.promise().query(
-        "INSERT INTO products (merchant_id, title, description, selling_price, discount, quantity_available) VALUES (?, ?, ?, ?, ?, ?)",
+        "INSERT INTO products (merchant_id, title, description, selling_price, discount, quantity_available, created_by) VALUES (?, ?, ?, ?, ?, ?, ?)",
         [
           req.user.user_id, // Merchant id
           title,
@@ -51,6 +52,7 @@ const addProduct = async (req, res) => {
           selling_price,
           discount,
           quantity_available,
+          user_id
         ]
       );
 
@@ -80,18 +82,20 @@ const updateProduct = async (req, res) => {
         discount,
         quantity_available,
       } = req.body;
+      const { user_id } = req.user;
 
       // Update the product in the database
       const [result] = await Connection.promise().query(
-        "UPDATE products SET title = ?, description = ?, selling_price = ?, discount = ?, quantity_available = ? WHERE product_id = ? AND merchant_id = ?",
+        "UPDATE products SET title = ?, description = ?, selling_price = ?, discount = ?, quantity_available = ?, updated_by = ? WHERE product_id = ? AND merchant_id = ?",
         [
           title,
           description,
           selling_price,
           discount,
           quantity_available,
+          user_id, // Setting the updater's user ID
           productId,
-          req.user.user_id, // Merchant id
+          user_id, // Merchant id
         ]
       );
 
