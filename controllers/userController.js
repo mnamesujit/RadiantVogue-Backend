@@ -12,7 +12,7 @@ const register = async (req, res) => {
       const hashedPassword = await bcrypt.hash(password, 10);
   
       // Check if the username already exists in the database
-      const query = 'SELECT * FROM user WHERE email = ?';
+      const query = 'SELECT * FROM users WHERE email = ?';
       const values = [username]
       Connection.query(query, values, async (err, results) => {
         if (err) {
@@ -25,8 +25,8 @@ const register = async (req, res) => {
         }
   
         // Insert the new user into the database
-        const insertQuery = 'INSERT INTO user (username,email, password, user_type) VALUES (?, ?, ?, ?)';
-        const values = [username, email, hashedPassword, "Customer"]
+        const insertQuery = 'INSERT INTO users (username,email, password, user_type) VALUES (?, ?, ?)';
+        const values = [username, email, hashedPassword]
         Connection.query(insertQuery, values, (err) => {
           if (err) {
             console.error('Error executing SQL query:', err);
@@ -49,7 +49,7 @@ const login = async (req, res) => {
     const { email, password } = req.body;
 
     // Find the user in the database
-    const query = 'SELECT * FROM user WHERE email = ?';
+    const query = 'SELECT * FROM users WHERE email = ?';
     const values = [email]
     Connection.query(query, values, async (err, results) => {
       if (err) {
