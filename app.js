@@ -9,7 +9,7 @@ const Connection = require('./config/dbConnection');
 const userRoutes = require("./routes/user")
 const productRoutes = require("./routes/product")
 const merchantRoutes = require("./routes/merchant")
-
+const cartRoutes = require('./routes/cart');
 
 //  Middlewares
 app.use(morgan("dev"));
@@ -26,6 +26,7 @@ app.get('/', (req, res) => {
 app.use('/api/user', userRoutes);
 app.use('/api/products', productRoutes)
 app.use('/api/merchant', merchantRoutes)
+app.use('/api/carts', cartRoutes);
 
 
 module.exports = app
