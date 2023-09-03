@@ -87,7 +87,7 @@ const viewCart = async (req, res) => {
     const [results] = await db
       .promise()
       .query(
-        "SELECT ci.cart_item_id, ci.product_id, p.title, p.selling_price, ci.quantity FROM cart_items ci INNER JOIN products p ON ci.product_id = p.product_id WHERE ci.cart_id = (SELECT cart_id FROM cart WHERE customer_id = ?)",
+        "SELECT ci.cart_item_id, ci.product_id, p.title, p.selling_price, p.discount, ci.quantity FROM cart_items ci INNER JOIN products p ON ci.product_id = p.product_id WHERE ci.cart_id = (SELECT cart_id FROM cart WHERE customer_id = ?)",
         [customerId]
       );
 
