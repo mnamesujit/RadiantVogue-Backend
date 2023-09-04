@@ -139,9 +139,30 @@ const deleteOrder = async (req, res) => {
   }
 };
 
+// Get all orders for a specific customer
+
+const getOrdersByCustomer = async (req, res) => {
+  try {
+    const customerId = req.user.user_id;
+
+    // Query the database to retrieve all orders for the customer
+
+    const [orders] = await db
+      .promise()
+      .query("SELECT * FROM orders WHERE customer_id = ?", [customerId]);
+
+    res.status(200).json({ orders });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({ message: "Error fetching orders" });
+  }
+};
+
 module.exports = {
   createOrder,
   getOrderById,
   updateOrderStatus,
   deleteOrder,
+  getOrdersByCustomer
 };
