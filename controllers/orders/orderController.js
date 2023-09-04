@@ -76,7 +76,33 @@ const getOrderById = async (req, res) => {
   }
 };
 
+// Update the status of an order
+
+const updateOrderStatus = async (req, res) => {
+  try {
+    const orderId = req.params.orderId;
+
+    const { status } = req.body;
+
+    // Update the status of the order in the orders table
+
+    await db
+      .promise()
+      .query("UPDATE orders SET status = ? WHERE order_id = ?", [
+        status,
+        orderId,
+      ]);
+
+    res.status(200).json({ message: "Order status updated successfully" });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({ message: "Error updating order status" });
+  }
+};
+
 module.exports = {
   createOrder,
   getOrderById,
+  updateOrderStatus,
 };
