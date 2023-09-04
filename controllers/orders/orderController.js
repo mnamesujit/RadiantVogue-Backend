@@ -101,8 +101,47 @@ const updateOrderStatus = async (req, res) => {
   }
 };
 
+// Delete an order by order_id
+
+const deleteOrder = async (req, res) => {
+  try {
+    const orderId = req.params.orderId;
+
+    // Start a database transaction
+
+    await db.promise().beginTransaction();
+
+    // Delete the order items associated with the order
+
+    await db
+      .promise()
+      .query("DELETE FROM order_items WHERE order_id = ?", [orderId]);
+
+    // Delete the order from the orders table
+
+    await db
+      .promise()
+      .query("DELETE FROM orders WHERE order_id = ?", [orderId]);
+
+    // Commit the database transaction
+
+    await db.promise().commit();
+
+    res.status(200).json({ message: "Order deleted successfully" });
+  } catch (error) {
+    console.error(error);
+
+    // Rollback the transaction if an error occurred
+
+    await db.promise().rollback();
+
+    res.status(500).json({ message: "Error deleting order" });
+  }
+};
+
 module.exports = {
   createOrder,
   getOrderById,
   updateOrderStatus,
+  deleteOrder,
 };
